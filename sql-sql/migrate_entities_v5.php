@@ -569,7 +569,7 @@ function add_address(mysqli $dst, bool $dryRun, int $entityID, string $type, ?st
     $typeId = getAddressTypeId($dst, $type);
     $prim = $primary ? 1 : 0;
     $stmt = $dst->prepare("INSERT IGNORE INTO entity_addresses (EntityID, AddressTypeID, Address1, Address2, City, State, Postal, Country, IsPrimary)
-                           VALUES (?,?,?,?,?,?,?,?,?,?)");
+                           VALUES (?,?,?,?,?,?,?,?,?)");
     $stmt->bind_param("iissssssi", $entityID, $typeId, $a1, $a2, $city, $state, $postal, $country, $prim);
     $stmt->execute();
     $stmt->close();
