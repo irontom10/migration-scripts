@@ -1,0 +1,6630 @@
+{
+  "tblAPDetail": [
+    {
+      "field": "APDetailID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "APHeadID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ItemNumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartNumer",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateExpec",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateRecvd",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Description",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Price",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Received",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Comment",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QtyRecvd",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Quantity",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblAPHeader": [
+    {
+      "field": "APHeadID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "VendorID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartID",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PONumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Expense Type",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "InvoiceNumber",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "InvoiceDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Amount",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DueDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Terms",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TaxDeductible",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Comments",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Paid",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Invoice Received",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Items Received",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToPAW",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GLID",
+      "type": "varchar(22)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GLAcct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblAPPayments": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "APHeadID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HowPaid",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DatePaid",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CHKNum",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtPaid",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblARPaymentDetail": [
+    {
+      "field": "ARPayDetailID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "ARPayHeadID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Memo",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "InterestRate",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARDDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtDueC",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Interest",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtDue30",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtDue60",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtDue90",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtDue90Plus",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P1Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P1Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARPaymentType1",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB1",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P2Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P2Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARPaymentType2",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB2",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P3Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment3",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P3Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARPaymentType3",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB3",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P4Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment4",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P4Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARPaymentType4",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB4",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P5Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment5",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P5Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARPaymentType5",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB5",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P6Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment6",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P6Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARPaymentType6",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB6",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentAmt",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GLID",
+      "type": "varchar(22)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblARPaymentHeader": [
+    {
+      "field": "ARPayHeadID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "CustomerID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ARHDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtDue",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblAppointments": [
+    {
+      "field": "AppointmentID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "CustomerID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehicleID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Tech",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApNotes",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApTime",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WaitDrop",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EstTime",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCWBankAccounts": [
+    {
+      "field": "Bank Account Number",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Type",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Bank Name",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ABA Number",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Street",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Suite",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "City",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "State/Province",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Zip/Postal Code",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Country",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Contact Name",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone Number",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Fax Number",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Starting Check Number",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Last Bank Statement Date",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Last Bank Statement Balance",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCanedHeader": [
+    {
+      "field": "CanedID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "Desc",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Name",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Make",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Model",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EarlyYear",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LateYear",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCanedLabor": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "CanedID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTypeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Description",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EstTime",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborType",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRate",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCanedParts": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "CanedID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartDescription",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Quantity",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Price",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FET",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreDep",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreAveCost",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HazWasteCharge",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GroupID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HazWasTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCashDraw": [
+    {
+      "field": "CashDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Amount",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCustomerTypes": [
+    {
+      "field": "TypeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TypeDesc",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblCustomers": [
+    {
+      "field": "CustomerID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "SourceID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TypeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CompanyName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ContactLastName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ContactFirstName",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ContactSpouse",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Address",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "City",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "State",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PostalCode",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SCompanyName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SContactLastName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SContactFirstName",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SAddress",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SCity",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SState",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SPostalCode",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PhoneNumber",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PhoneExt",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FaxNumber",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WorkPhone",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WorkExt",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PagerPhone",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CellPhone",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EmailAddr",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustBDay",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SpouseBDay",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DLNo",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustSince",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ResaleNo",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CheckApp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ChargeApp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CreditLim",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "InternalComments",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultPricing",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TaxExempt",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AirReminderSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AirReminderDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OilChangeSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OilChangeDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TuneUpSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TuneUpDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransServiceSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransServiceDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SmogSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SmogDate",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustWarnings",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblDeletedWorkorders": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Reason",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateDeleted",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Login",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblEmpTimeClock": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "EmployeeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Clockin",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ClockOut",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransTypeID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblEmpTransType": [
+    {
+      "field": "TransTypeID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransType",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblEmployees": [
+    {
+      "field": "EmployeeId",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PayTypeID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Supervisor",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SearchKey",
+      "type": "varchar(8)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Firstname",
+      "type": "varchar(15)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Middlename",
+      "type": "varchar(10)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Lastname",
+      "type": "varchar(15)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Addr1",
+      "type": "varchar(40)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Addr2",
+      "type": "varchar(40)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "City",
+      "type": "varchar(25)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "State",
+      "type": "varchar(2)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "country",
+      "type": "varchar(5)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Zip",
+      "type": "varchar(10)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SSNNo",
+      "type": "varchar(9)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OfficePhone",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Officephone/fax",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Officephone/data",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HomePhone",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SexMale",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BirthDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HireDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TerminationDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LastReview",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "NextReview",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EmergNotify",
+      "type": "varchar(100)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Pay",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EEOClass",
+      "type": "smallint(6)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CurrentStatus",
+      "type": "varchar(8)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Comments",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Active",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblEngines": [
+    {
+      "field": "EngDesc",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLChartofAccountTypes": [
+    {
+      "field": "Account Type Num",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Account Type",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLChartofAccounts": [
+    {
+      "field": "ID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "Account Type",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Group Type",
+      "type": "varchar(1)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Group Sequence",
+      "type": "tinyint(4)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Account",
+      "type": "varchar(8)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Account Description",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Sub Account",
+      "type": "varchar(8)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Sub Account Description",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Beginning Balance",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Notes",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLPreferences": [
+    {
+      "field": "Company Name",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Slogan",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Street",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Suite",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "City State Zip Code",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone Number",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Fax Number",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Fed Tax ID",
+      "type": "varchar(15)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Maximize on 640",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Reg",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLReportGroups": [
+    {
+      "field": "ID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "Account Type",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Group Type",
+      "type": "varchar(1)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Group Name",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLReportList": [
+    {
+      "field": "Report Category",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Report Name",
+      "type": "varchar(75)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Query Name",
+      "type": "varchar(75)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Description",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Date Selectors",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Category Selectors",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Image",
+      "type": "blob",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ReportNameDesc",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLTransactions": [
+    {
+      "field": "Transaction ID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "GL ID",
+      "type": "varchar(22)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Date Time Stamp",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Account ID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GLDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Debit",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Credit",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Source",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Operation",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblGLTransactionsArchive": [
+    {
+      "field": "Transaction ID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "GL ID",
+      "type": "varchar(22)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Date Time Stamp",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Account ID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GLDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Debit",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Credit",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Source",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Operation",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblLaborTrackTypes": [
+    {
+      "field": "LaborTrackID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborDesc",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Account",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRate",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblLaborTypes": [
+    {
+      "field": "LaborTypeID",
+      "type": "varchar(6)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTrackID",
+      "type": "varchar(15)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Title",
+      "type": "varchar(40)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Desciption",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRateA",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRateB",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRateC",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRateD",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Taxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Hours",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Update",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CLinkCode",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblMCI": [
+    {
+      "field": "SetupID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SalesTaxRate",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SalesTaxRate2",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CompanyName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Address",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "City",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StateOrProvince",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PostalCode",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Country",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PhoneNumber",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FaxNumber",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultPaymentTerms",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultInvoiceDescription",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Estimate",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Invoice",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Extra",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Warranty",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Warranty2",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OCDisclaimer",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultMiles",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Warranty3",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultMonths",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartsDisclaimer",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "NoWork",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "NoWork2",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ImportantNotice",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ReportFontSize",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HeaderFont",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DisclaimFont",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Done",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Reg",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UserID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BarNumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EPANumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TParts",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TLabor",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TCores",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PMarkUp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LogoLocation",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HasLogo",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseSec",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefInvoice",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SortOpenWO",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SortOpenEst",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseSurChargePercent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseSurChargeAmt",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SurChargePercent",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SurChargeAmt",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SurChargeMax",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseDefaultMarkup",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultMarkup",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "InventoryWarning",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseShopCharge",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopChargeType",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowShopCharge",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HaveShopMaxLimit",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopMaxLimit",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopIncludeParts",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopIncludeLabor",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopPartsTaxCharge",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopLaborTaxCharge",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopPercent",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopAmout",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowHT",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowPM",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowNumType",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowHazAs",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowFET",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowEPA",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowBarNumber",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowHRSTotal",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PrintSublet",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseMileOut",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseBarNumber",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BarAlt",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefPrint",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartAutoMarkUp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HaveCInvoice",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CInvoiceName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShowTips",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PrintHeader",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "MultPrinters",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RecordIntPart",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PrtEstRev",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HeaderFontSize",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseCash",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PrntSig",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PrntBk",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "MultComp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "IntPartPull",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Align",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Balance",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Valve",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefBkpDrv",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefLRateA",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefLRateB",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefLRateC",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefLRateD",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RefundTCores",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTaxRate1",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTaxRate2",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "THazWas",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Updated",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RelInvQuickEst",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblMCIAcct": [
+    {
+      "field": "SetupID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOParts",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOPartsCOG",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOLabor",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOLaborCOG",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOSublet",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOSubletCOG",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOFET",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOCore",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOHaz",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOShop",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOTax",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWODiscount",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctWOTotal",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctAPDebit",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctAPCredit",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctARDebit",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctARCredit",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblMakes": [
+    {
+      "field": "MakeID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "Make",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblModels": [
+    {
+      "field": "ModelID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "MakeID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Model",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblPRPayType": [
+    {
+      "field": "PayTypeID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "PayDesc",
+      "type": "varchar(20)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShortName",
+      "type": "varchar(8)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Frequency",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HoursPerUnit",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SysPayType",
+      "type": "smallint(6)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "W2BoxCode",
+      "type": "smallint(6)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OTEnabled",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OTQuantity",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OTRate",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OTPayTypeID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DefaultExpAcct",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblPartGroup": [
+    {
+      "field": "GroupID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Upadate",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Description",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseMarkup",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Min1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Max1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Percent1",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Min2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Max2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Percent2",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Min3",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Max3",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Percent3",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Min4",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Max4",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Percent4",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Min5",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Max5",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Percent5",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BPrice",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CPrice",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DPrice",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblParts": [
+    {
+      "field": "PartID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "MUL",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VendorID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GroupID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartDescription",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Line",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Class",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Weight",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Location",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ProdCode",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SKUNo",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Stock",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BestQuan",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "MinQuan",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ReorderQuan",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OnHand",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Received",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "NUR",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HazWaste",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FET",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreDep",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreAveCost",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ReturnableCore",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UnitPrice",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RetailPriceA",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Update",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Comments",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RetailPriceB",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RetailPriceC",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RetailPriceD",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PUYear",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PUMake",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PUModel",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "IsTire",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TireSize",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HazWasTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StockNotify",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblPartsAlt": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "PartID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AltNumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SKUNumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblPartsAltVendors": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "PartID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VendorID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Cost",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblPayments": [
+    {
+      "field": "PaymentID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentTermsID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentAmount",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CreditCardNumber",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CardholdersName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CreditCardExpDate",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CheckNumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QB1",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentTermsID2",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QB2",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PDate2",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P2Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment3",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentTermsID3",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QB3",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PDate3",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P3Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment4",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentTermsID4",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QB4",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PDate4",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P4Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment5",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentTermsID5",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QB5",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PDate5",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P5Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Payment6",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaymentTermsID6",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "QB6",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PDate6",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "P6Acct",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblRemindersSet": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "ReminderID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustomerID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehicleID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateFinished",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateDue",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Mileage",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Sent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateSent",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblSourceofCustomer": [
+    {
+      "field": "SourceID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "SourceOfCustomer",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblTypeofPayment": [
+    {
+      "field": "PaymentTermsID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TypeofPayment",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DiscountPercent",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DiscountDays",
+      "type": "smallint(6)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Days",
+      "type": "smallint(6)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "UseWithAR",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblVehicleTrans": [
+    {
+      "field": "TransID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransDesc",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblVehicles": [
+    {
+      "field": "VehicleID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "CustomerID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Make",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Model",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Year",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "License",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LicState",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ManufactureDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehicleTagID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Vin",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Color",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Engine",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Trans",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DriveAxel",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AirCond",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Comments",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AveDMileage",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblVendors": [
+    {
+      "field": "VendorID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PaytermsID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AcctID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LookupCode",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CompanyName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FirstName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LastName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Address",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "City",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "State",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Zip",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Fax",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "email",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ContactName",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateStarted",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FedTaxNo",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StateTaxNo",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LastCrg",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtLastCrg",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LastPayment",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AmtLastPayment",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CreditLimit",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Comments",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWOEstRev": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ContactHow",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OrigAmt",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevReason",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWOLabor": [
+    {
+      "field": "LaborID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTypeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EmployeeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Description",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EstTime",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ActualTime",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborType",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborRate",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LWarranty",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StartTime",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StopTime",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "POrder",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateSent",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborSent2",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateSent2",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborSent3",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateSent3",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LComp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LCompDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWOLaborEmpTime": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WOLaborID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EmployeeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StartTime",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "StopTime",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ClkHrs",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Notes",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWOParts": [
+    {
+      "field": "WorkorderPartID",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartDescription",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Quantity",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Price",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Cost",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreAveCost",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreDep",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HazWasteCharge",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "FET",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GroupID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VendorID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartPONumber",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PWarranty",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EmployeeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "POrder",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Return",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ReturnLocation",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "IsTire",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TireSize",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PComp",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PCompDate",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOLaborID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RefundTCores",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "IncludeCore",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CoreCheck",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "HazWasTaxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWOSafe": [
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RFTread",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LFTread",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RRTread",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LRTread",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SpareTread",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RFPSI",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LFPSI",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RRPSI",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LRPSI",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SparePSI",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BrkF",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BrkR",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Battery",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Coolant",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ChassisLube",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AirFilter",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransFluid",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DiffAxelFluid",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PSFluid",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WasherFluid",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BrkFluid",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BatteryWater",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Wipers",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "BeltsHoses",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Carwash",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWOSublet": [
+    {
+      "field": "LineNo",
+      "type": "int(11)",
+      "null": "NO",
+      "key": "PRI",
+      "default": "",
+      "extra": "auto_increment"
+    },
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SubletCompany",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SubletDesc",
+      "type": "varchar(255)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SubletCost",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SubletSell",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Taxable",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ],
+  "tblWorkorders": [
+    {
+      "field": "WorkorderID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustomerID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehicleID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "EmployeeID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PurchaseOrderNumber",
+      "type": "varchar(30)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateReceived",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateRequired",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehicleMilage",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehicleMilageOut",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Recomandation",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Problem",
+      "type": "text",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DateFinished",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DatePickedUp",
+      "type": "date",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SalesTaxRate",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SalesTaxRate2",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "PartsDisc",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborDisc",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Type",
+      "type": "varchar(20)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CannedID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Inprogress",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Status",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TaxExempt",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WWarranty",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WMiles",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WMonths",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "NoWorkAmt",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopCharge",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ShopApplied",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate1",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime1",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy1",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone1",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate2",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime2",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy2",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone2",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt3",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate3",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime3",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy3",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone3",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt4",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate4",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime4",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy4",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone4",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt5",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate5",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime5",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy5",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone5",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedAmt6",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedDate6",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RevisedTime6",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "ApprovedBy6",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Phone6",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSubTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOPartsTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOLaborTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOShopTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOCoreDep",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOHazard",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOTFET",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOTax",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOTax2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WONonTax",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSmogChk",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSmogCert",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOOilAnt",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSublet",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSubletTotal",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WODisc",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WODiscNonT",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WODiscT",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToQB",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AirReminderSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AirReminderDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OilChangeSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "OilChangeDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TuneUpSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TuneUpDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransServiceSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "TransServiceDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SmogSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SmogDate",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RecSent",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "RecDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "Custom",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustomType",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "CustomDate",
+      "type": "datetime",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "VehRec",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "AltCustomerID",
+      "type": "int(11)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SentToPeach",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "SendToCLink",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "GLID",
+      "type": "varchar(50)",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTaxRate1",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "LaborTaxRate2",
+      "type": "double",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSTax1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOSTax2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOLTax1",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "WOLTax2",
+      "type": "float",
+      "null": "YES",
+      "key": "",
+      "default": "",
+      "extra": ""
+    },
+    {
+      "field": "DoNotPrintPartIDs",
+      "type": "tinyint(1)",
+      "null": "NO",
+      "key": "",
+      "default": "",
+      "extra": ""
+    }
+  ]
+}
