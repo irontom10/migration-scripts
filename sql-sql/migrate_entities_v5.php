@@ -438,53 +438,89 @@ function norm_vendor_lookup(string $s): string {
  * Map legacy tblVendors.LookupCode to a canonical vendor_lookup_codes.Code.
  * Based on your conversion table (shop_db_1.tblVendors.LookupCode -> vendor_lookup_codes.Code).
  */
+function load_vendor_lookup_descriptions(string $schemaPath = '/data-source/shema_sumamry.json'): array {
+    static $cache = null;
+    if ($cache !== null) return $cache;
+
+    if (!is_readable($schemaPath)) return $cache = [];
+    $json = @file_get_contents($schemaPath);
+    if ($json === false) return $cache = [];
+    $data = json_decode($json, true);
+    if (!is_array($data)) return $cache = [];
+
+    // Try a few likely shapes to extract seed descriptions
+    $table = $data['vendor_lookup_codes'] ?? ($data['tables']['vendor_lookup_codes'] ?? ($data['tables']['vendor_lookup_codes']['seed'] ?? null));
+    if ($table === null && isset($data['tables'])) {
+        // maybe the entry itself is an array of rows under tables
+        $table = $data['tables']['vendor_lookup_codes'] ?? null;
+    }
+
+    $descs = [];
+    $rows = [];
+    if (is_array($table)) {
+        if (isset($table['seed']) && is_array($table['seed'])) {
+            $rows = $table['seed'];
+        } else {
+            $rows = $table;
+        }
+    }
+
+    foreach ($rows as $row) {
+        if (is_array($row) && isset($row['Code'])) {
+            $code = strtoupper(trim((string)$row['Code']));
+            $desc = trim((string)($row['Description'] ?? ''));
+            if ($code !== '') {
+                $descs[$code] = $desc !== '' ? $desc : $code;
+            }
+        }
+    }
+
+    return $cache = $descs;
+}
+
+/**
+ * Map legacy tblVendors.LookupCode to a canonical vendor_lookup_codes.Code.
+ * Synonyms originate from the provided conversion map (old values -> new code key).
+ * Descriptions are loaded from /data-source/shema_sumamry.json when available.
+ */
 function map_vendor_lookup(?string $legacy): array {
     $legacy = $legacy ?? '';
     $n = norm_vendor_lookup($legacy);
 
-    // CanonicalCode => [Description, Synonyms...]
-    $map = [
-        'WRECKER'            => ['Wrecker', 'WRECKER'],
-        'TOWING'             => ['Towing', 'TOWING'],
-        'OFFICE_SUPPLIES'    => ['Office Supplies', 'OFFICE SUPPLIES', 'OFFICE'],
-        'SHOP_SUPPLIES'      => ['Shop Supplies', 'OFFICE-SHOP SUPPLIES', 'OFFICE SHOP SUPPLIES', 'SUPPLIES', 'SHOP'],
-        'PARTS'              => ['Parts', 'PART', 'PARTS', "PART'S", "PARTS'S", "PART'S", "PARTS'"],
-        'BUS_PARTS'          => ['Bus Parts', 'BUS PARTS'],
-        'TIRES'              => ['Tires', 'TIRES', 'TIRE', "TIRE'S", "TIRES'"],
-        'LIGHTING'           => ['Lighting', 'LIGHTS', 'LIGHTING'],
-        'HYDRAULIC_PARTS'    => ['Hydraulic Parts', 'HYD.PARTS', 'HYD PARTS', 'HYDRAULIC PARTS'],
-        'ALTERNATOR_STARTER' => ['Alternator/Starter', 'ALTERNATOR', 'STARTER', 'ALTERNATOR STARTER'],
-        'VEHICLE_BODY'       => ['Vehicle Body', 'BODY', 'VEHICLE BODY'],
-        'WINDSHIELD_GLASS'   => ['Windshield/Glass', 'WINDSHIELD', 'GLASS', 'WINDSHIELD GLASS'],
-        'GAS_FUEL'           => ['Gas/Fuel', 'GAS', 'FUEL', 'GAS FUEL'],
-        'MEALS'              => ['Meals', 'MEALS'],
-        'ENTERTAINMENT'      => ['Entertainment', 'ENTERTAINMENT'],
-        'BANKING'            => ['Banking', 'BANK', 'BANKING'],
-        'CREDIT_CARDS'       => ['Credit Cards', 'CREDIT CARDS', 'CREDIT CARD'],
-        'TAXES'              => ['Taxes', 'TAXES', 'TAX'],
-        'UTILITIES'          => ['Utilities', 'UTILITIES'],
-        'PHONE'              => ['Phone', 'PHONE'],
-        'RENT'               => ['Rent', 'RENT'],
-        'MEDICAL'            => ['Medical', 'MEDICAL'],
-        'OIL'                => ['Oil', 'OIL'],
-        'METAL'              => ['Metal', 'METAL'],
-        'PAINT'              => ['Paint', 'PAINT'],
-        'TOOLS'              => ['Tools', 'TOOLS'],
-        'COMPUTERS_IT'       => ['Computers / IT', 'COMPUTER', 'COMPUTERS', 'COMPUTERS IT', 'IT'],
-        'GSE'                => ['GSE', 'GSE'],
-        'SERVICES'           => ['Services', 'SERVICES', 'SERVICE'],
-        'FREIGHT'            => ['Freight', 'FREIGHT'],
-        'SHIPPING'           => ['Shipping', 'SHIPPING'],
-        'FLOWERS'            => ['Flowers', 'FLOWERS'],
-        'CHARITY'            => ['Charity', 'CHARITY'],
-        'CLOTHING'           => ['Clothing', 'CLOTHING'],
+    $synonymMap = [
+        'TOWING'            => ['TOWING', 'WRECKER', 'WRECKER'],
+        'OFFICE_SUPPLIES'   => ['OFFICE SUPPLIES', 'OFFICE'],
+        'SHOP_SUPPLIES'     => ['SUPPLIES', 'SHOP', 'OFFICE-SHOP SUPPLIES'],
+        'PARTS'             => ['PARTS', 'PART', "PART'S", 'LIGHTS', 'OIL', 'TIRES', 'TIRE', "TIRE'S", 'BUS PARTS', 'GSE', 'HYD.PARTS', 'ALTERNATOR', 'METAL', 'PAINT', 'BODY'],
+        'TOOLS'             => ['TOOLS'],
+        'FREIGHT'           => ['FREIGHT', 'SHIPPING'],
+        'UTILITIES'         => ['SERVICES', 'UTILITIES'],
+        'COMMUNICATIONS'    => ['PHONE', 'ENTERTAINMENT'],
+        'RENT'              => ['RENT'],
+        'BANKING'           => ['BANK', 'BANKING'],
+        'CREDIT_CARDS'      => ['CREDIT CARDS'],
+        'TAXES'             => ['TAXES'],
+        'GAS_FUEL'          => ['GAS'],
+        'MEALS'             => ['MEALS'],
+        'CLOTHING'          => ['CLOTHING'],
+        'OFFICE_EQUIPMENT'  => ['COMPUTER'],
+        'CHARITY'           => ['CHARITY'],
+        'MEDICAL'           => ['MEDICAL'],
+        'FLOWERS'           => ['FLOWERS'],
     ];
 
-    foreach ($map as $code => $def) {
-        $desc = $def[0];
-        $syns = array_slice($def, 1);
+    // Add self as synonym to allow already normalized codes to map through.
+    foreach ($synonymMap as $code => &$syns) {
+        $syns[] = $code;
+    }
+    unset($syns);
+
+    $descs = load_vendor_lookup_descriptions();
+
+    foreach ($synonymMap as $code => $syns) {
         foreach ($syns as $syn) {
             if ($n === norm_vendor_lookup($syn)) {
+                $desc = $descs[$code] ?? str_replace('_', ' ', ucwords(strtolower($code), '_'));
                 return ['code' => $code, 'desc' => $desc, 'legacy_norm' => $n];
             }
         }
