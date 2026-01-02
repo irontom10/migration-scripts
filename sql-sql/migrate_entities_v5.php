@@ -665,6 +665,37 @@ function get_lookup_id(mysqli $dst, string $table, string $idCol, string $nameCo
   return $newId;
 }
 
+function fetch_lookup_id(mysqli $dst, string $table, string $idCol, string $nameCol, string $value): ?int
+{
+  $value = trim($value);
+  $stmt = $dst->prepare("SELECT $idCol FROM $table WHERE $nameCol=? LIMIT 1");
+  $stmt->bind_param("s", $value);
+  $stmt->execute();
+  $stmt->bind_result($id);
+  if ($stmt->fetch()) {
+    $stmt->close();
+    return intval($id);
+  }
+  $stmt->close();
+  return null;
+}
+
+function canonical_customer_type(?string $raw): ?string
+{
+  if ($raw === null) return null;
+  $normalized = strtolower(trim($raw));
+  if ($normalized === '') return null;
+
+  $compact = preg_replace('/\s+/', '', $normalized);
+  return match (true) {
+    in_array($compact, ['1', 'chargeaccount', 'chargeacct', 'charge'], true) => 'Charge Account',
+    in_array($compact, ['2', 'ret', 'retail'], true) => 'Retail',
+    in_array($compact, ['3', 'com', 'comm', 'commercial'], true) => 'Commercial',
+    in_array($compact, ['4', 'who', 'wholesale'], true) => 'Wholesale',
+    default => null,
+  };
+}
+
 
 /**
  * Normalize legacy vendor lookup codes for mapping (trim, upper, remove punctuation, collapse spaces).
@@ -804,9 +835,14 @@ function getAddressTypeId(mysqli $dst, string $name): int
 {
   return get_lookup_id($dst, 'address_types', 'AddressTypeID', 'AddressTypeName', strtolower(trim($name ?: 'main')));
 }
-function getCustomerTypeId(mysqli $dst, string $name): int
+function getCustomerTypeId(mysqli $dst, string $name): ?int
 {
-  return get_lookup_id($dst, 'customer_types', 'CustomerTypeID', 'CustomerTypeName', trim($name));
+  $canonical = canonical_customer_type($name);
+  if ($canonical === null) {
+    logmsg("Skipping unknown customer type '{$name}'");
+    return null;
+  }
+  return fetch_lookup_id($dst, 'customer_types', 'CustomerTypeID', 'CustomerTypeName', $canonical);
 }
 
 function getPricingPlanId(mysqli $dst, string $code): int
