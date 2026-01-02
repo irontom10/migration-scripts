@@ -1040,7 +1040,7 @@ function upsert_customer(mysqli $dst, bool $dryRun, int $entityID, ?int $legacyC
   $stmt->close();
 }
 
-function upsert_vendor(mysqli $dst, bool $dryRun, int $entityID, ?int $legacyVendorID, $paytermsID, $acctID, ?string $lookupCode, ?string $fedTaxNo, ?string $stateTaxNo, $creditLimit, ?string $comments): void
+function upsert_vendor(mysqli $dst, bool $dryRun, int $entityID, ?int $legacyVendorID, $paytermsID, $acctID, $vendorLookupCodeID, ?string $legacyLookupCode, ?string $fedTaxNo, ?string $stateTaxNo, $creditLimit, ?string $comments): void
 {
   if ($dryRun) return;
   $cl = null;
@@ -1059,7 +1059,7 @@ function getEmployeeStatusId(mysqli $dst, ?string $status): ?int
   return get_lookup_id($dst, 'employee_statuses', 'EmployeeStatusID', 'StatusName', $status);
 }
 
-function upsert_employee(mysqli $dst, bool $dryRun, int $entityID, ?int $legacyEmployeeID, $payTypeID, ?string $supervisor, ?string $searchKey, ?string $ssnNo, ?string $hireDate, ?string $termDate, $pay, ?string $currentStatus, ?string $comments, $active): void
+function upsert_employee(mysqli $dst, bool $dryRun, int $entityID, ?string $legacyEmployeeID, $payTypeID, ?string $supervisor, ?string $searchKey, ?string $ssnNo, ?string $hireDate, ?string $termDate, $pay, ?string $currentStatus, ?string $comments, $active): void
 {
   if ($dryRun) return;
   $statusId = getEmployeeStatusId($dst, $currentStatus);
@@ -1086,11 +1086,10 @@ function upsert_sublet_provider(mysqli $dst, bool $dryRun, int $entityID): void
 function employee_entity_id(mysqli $dst, ?string $legacyEmployeeId): ?int
 {
   $legacyEmployeeId = trim((string)$legacyEmployeeId);
-  if ($legacyEmployeeId === '' || !is_numeric($legacyEmployeeId)) return null;
+  if ($legacyEmployeeId === '') return null;
 
-  $legacyInt = intval($legacyEmployeeId);
   $stmt = $dst->prepare("SELECT EntityID FROM employee_accounts WHERE LegacyEmployeeID = ? LIMIT 1");
-  $stmt->bind_param("s", $legacyInt);
+  $stmt->bind_param("s", $legacyEmployeeId);
   $stmt->execute();
   $res = $stmt->get_result();
   $row = $res ? $res->fetch_assoc() : null;
@@ -1413,7 +1412,8 @@ logmsg("Vendors migrated: {$stats['vendors']}");
 logmsg("tblEmployees -> entities/employee_accounts ...");
 $r = q($src, "SELECT * FROM tblEmployees");
 while ($row = $r->fetch_assoc()) {
-  $legacyID = isset($row['EmployeeId']) ? intval($row['EmployeeId']) : null;
+  $legacyIDRaw = trim((string)($row['EmployeeId'] ?? ''));
+  $legacyID = ($legacyIDRaw !== '') ? $legacyIDRaw : null;
   $first    = trim((string)($row['Firstname'] ?? ''));
   $middle   = trim((string)($row['Middlename'] ?? ''));
   $last     = trim((string)($row['Lastname'] ?? ''));
