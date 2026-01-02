@@ -919,6 +919,58 @@ function normalize_datetime(?string $dt): ?string
   }
 }
 
+function add_minutes_to_datetime(string $dt, int $minutes): string
+{
+  try {
+    $d = new DateTime($dt);
+    $d->modify(($minutes >= 0 ? '+' : '') . $minutes . ' minutes');
+    return $d->format('Y-m-d H:i:s');
+  } catch (Throwable $e) {
+    return $dt;
+  }
+}
+
+function align_clock_with_trans_date(?string $clock, ?string $transDate): ?string
+{
+  if ($clock === null || $transDate === null) return $clock;
+  try {
+    $clockDt = new DateTime($clock);
+    $year = intval($clockDt->format('Y'));
+    if ($year < 1970) {
+      $datePart = (new DateTime($transDate))->format('Y-m-d');
+      return $datePart . ' ' . $clockDt->format('H:i:s');
+    }
+  } catch (Throwable $e) {
+    return $clock;
+  }
+  return $clock;
+}
+
+function ensure_clock_span(?string $clockIn, ?string $clockOut, ?string $transDate, int $defaultMinutes = 480): array
+{
+  $hasIn = $clockIn !== null;
+  $hasOut = $clockOut !== null;
+
+  if (!$hasIn && !$hasOut) {
+    if ($transDate === null) return [null, null];
+    $datePart = (new DateTime($transDate))->format('Y-m-d');
+    $clockIn = $datePart . ' 08:00:00';
+    $clockOut = add_minutes_to_datetime($clockIn, $defaultMinutes);
+  } elseif ($hasIn && !$hasOut) {
+    $clockOut = add_minutes_to_datetime($clockIn, $defaultMinutes);
+  } elseif (!$hasIn && $hasOut) {
+    $clockIn = add_minutes_to_datetime($clockOut, -$defaultMinutes);
+  }
+
+  $inTs = $clockIn ? strtotime($clockIn) : false;
+  $outTs = $clockOut ? strtotime($clockOut) : false;
+  if ($inTs !== false && $outTs !== false && $outTs <= $inTs) {
+    $clockOut = date('Y-m-d H:i:s', $inTs + ($defaultMinutes * 60));
+  }
+
+  return [$clockIn, $clockOut];
+}
+
 function map_trans_type_to_action(string $legacyType, bool $isOutContext = false): string
 {
   $t = strtoupper(trim($legacyType));
@@ -1150,6 +1202,10 @@ function migrate_timeclock(mysqli $src, mysqli $dst, bool $dryRun): array
     $clockOut = normalize_datetime($row['ClockOut'] ?? null);
     $transDate = normalize_datetime($row['TransDate'] ?? null);
     $note = $transType !== '' ? $transType : null;
+
+    $clockIn = align_clock_with_trans_date($clockIn, $transDate);
+    $clockOut = align_clock_with_trans_date($clockOut, $transDate);
+    [$clockIn, $clockOut] = ensure_clock_span($clockIn, $clockOut, $transDate);
 
     if ($clockIn !== null && $clockOut !== null) {
       $startAction = map_trans_type_to_action($transType, false);
