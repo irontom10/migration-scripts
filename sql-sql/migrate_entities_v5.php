@@ -51,7 +51,7 @@ function logmsg(string $msg): void {
 function usage(): void {
     global $argv;
     $me = basename($argv[0]);
-    fwrite(STDOUT, "Usage:\n  php $me create\n  php $me drop\n  php $me migrate [--dry-run]\n");
+    fwrite(STDOUT, "Usage:\n  php $me create\n  php $me drop\n  php $me update [--dry-run]\n  php $me migrate [--dry-run]\n");
     exit(1);
 }
 
@@ -70,6 +70,48 @@ function q(mysqli $db, string $sql): mysqli_result|bool {
         throw new RuntimeException("SQL error: " . $db->error . "\nSQL: $sql");
     }
     return $res;
+}
+
+function table_exists(mysqli $db, string $schema, string $table): bool {
+    $stmt = $db->prepare("SELECT 1 FROM information_schema.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? LIMIT 1");
+    $stmt->bind_param("ss", $schema, $table);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $exists = $res !== false && $res->fetch_row();
+    $stmt->close();
+    return (bool)$exists;
+}
+
+function index_exists(mysqli $db, string $schema, string $table, string $index): bool {
+    $stmt = $db->prepare("SELECT 1 FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ? LIMIT 1");
+    $stmt->bind_param("sss", $schema, $table, $index);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $exists = $res !== false && $res->fetch_row();
+    $stmt->close();
+    return (bool)$exists;
+}
+
+function fk_exists(mysqli $db, string $schema, string $table, string $fkName): bool {
+    $stmt = $db->prepare("SELECT 1 FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = ? AND TABLE_NAME = ? AND CONSTRAINT_NAME = ? LIMIT 1");
+    $stmt->bind_param("sss", $schema, $table, $fkName);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $exists = $res !== false && $res->fetch_row();
+    $stmt->close();
+    return (bool)$exists;
+}
+
+function ensure_index(mysqli $db, bool $dryRun, string $schema, string $table, string $index, string $definition): void {
+    if (index_exists($db, $schema, $table, $index)) return;
+    if ($dryRun) return;
+    q($db, "ALTER TABLE $table ADD $definition");
+}
+
+function ensure_fk(mysqli $db, bool $dryRun, string $schema, string $table, string $fkName, string $definition): void {
+    if (fk_exists($db, $schema, $table, $fkName)) return;
+    if ($dryRun) return;
+    q($db, "ALTER TABLE $table ADD CONSTRAINT $fkName $definition");
 }
 
 function normalize_key(string $s): string {
@@ -316,11 +358,81 @@ CREATE TABLE IF NOT EXISTS sublet_accounts (
   CONSTRAINT fk_sublet_entity FOREIGN KEY (EntityID) REFERENCES entities(EntityID) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Sublet provider role profile (1:1 with entities). Minimal today; extend later for rates/terms.';
 
+-- Timeclock tables
+CREATE TABLE IF NOT EXISTS time_actions (
+  action_id      SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  action_code    VARCHAR(32)        NOT NULL,
+  action_name    VARCHAR(64)        NOT NULL,
+  is_active      TINYINT(1)         NOT NULL DEFAULT 1,
+  sort_order     SMALLINT UNSIGNED  NOT NULL DEFAULT 0,
+  PRIMARY KEY (action_id),
+  UNIQUE KEY uq_time_actions_code (action_code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Lookup of timeclock actions such as CLOCK_IN, CLOCK_OUT, BREAK_START, etc.';
+
+CREATE TABLE IF NOT EXISTS time_entry_types (
+  entry_type_id  SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  type_code      VARCHAR(32)        NOT NULL,
+  type_name      VARCHAR(64)        NOT NULL,
+  is_active      TINYINT(1)         NOT NULL DEFAULT 1,
+  sort_order     SMALLINT UNSIGNED  NOT NULL DEFAULT 0,
+  PRIMARY KEY (entry_type_id),
+  UNIQUE KEY uq_time_entry_types_code (type_code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Lookup describing why/how a time entry was created (terminal, admin, import, etc).';
+
+CREATE TABLE IF NOT EXISTS employee_work_sessions (
+  work_session_id        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  entity_id              INT             NOT NULL,
+  opened_at              DATETIME        NOT NULL,
+  closed_at              DATETIME        NULL,
+  created_at             DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created_by_entity_id   INT             NULL,
+  voided_at              DATETIME        NULL,
+  voided_by_entity_id    INT             NULL,
+  void_reason            VARCHAR(255)    NULL,
+  PRIMARY KEY (work_session_id),
+  KEY idx_sessions_entity_opened (entity_id, opened_at),
+  KEY idx_sessions_opened (opened_at),
+  CONSTRAINT fk_sessions_entity FOREIGN KEY (entity_id) REFERENCES entities(EntityID),
+  CONSTRAINT fk_sessions_created_by FOREIGN KEY (created_by_entity_id) REFERENCES entities(EntityID),
+  CONSTRAINT fk_sessions_voided_by FOREIGN KEY (voided_by_entity_id) REFERENCES entities(EntityID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Optional grouping of time events into a shift/work session.';
+
+CREATE TABLE IF NOT EXISTS employee_time_events (
+  time_event_id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  entity_id             INT             NOT NULL,
+  action_id             SMALLINT UNSIGNED NOT NULL,
+  event_at              DATETIME        NOT NULL,
+  entry_type_id         SMALLINT UNSIGNED NOT NULL,
+  work_session_id       BIGINT UNSIGNED NULL,
+  minutes               INT NULL,
+  note                  VARCHAR(255) NULL,
+  created_at            DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created_by_entity_id  INT             NULL,
+  voided_at             DATETIME        NULL,
+  voided_by_entity_id   INT             NULL,
+  void_reason           VARCHAR(255)    NULL,
+  PRIMARY KEY (time_event_id),
+  KEY idx_time_events_entity_at (entity_id, event_at),
+  KEY idx_time_events_at (event_at),
+  KEY idx_time_events_action_at (action_id, event_at),
+  KEY idx_time_events_session (work_session_id),
+  CONSTRAINT fk_time_events_action FOREIGN KEY (action_id) REFERENCES time_actions(action_id),
+  CONSTRAINT fk_time_events_entry_type FOREIGN KEY (entry_type_id) REFERENCES time_entry_types(entry_type_id),
+  CONSTRAINT fk_time_events_session FOREIGN KEY (work_session_id) REFERENCES employee_work_sessions(work_session_id),
+  CONSTRAINT fk_time_events_entity FOREIGN KEY (entity_id) REFERENCES entities(EntityID),
+  CONSTRAINT fk_time_events_created_by FOREIGN KEY (created_by_entity_id) REFERENCES entities(EntityID),
+  CONSTRAINT fk_time_events_voided_by FOREIGN KEY (voided_by_entity_id) REFERENCES entities(EntityID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Event/punch log for employee timeclock actions.';
+
 SET FOREIGN_KEY_CHECKS=1;
 SQL;
 
 $dropSql = <<<SQL
 SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS employee_time_events;
+DROP TABLE IF EXISTS employee_work_sessions;
+DROP TABLE IF EXISTS time_entry_types;
+DROP TABLE IF EXISTS time_actions;
 DROP TABLE IF EXISTS sublet_accounts;
 DROP TABLE IF EXISTS employee_accounts;
 DROP TABLE IF EXISTS employee_statuses;
@@ -384,6 +496,113 @@ function ensure_seed_data(mysqli $dst, bool $dryRun): void {
         ('C',1.0000,'Default C'),
         ('B',1.0000,'Default B'),
         ('A',1.0000,'Default A')");
+
+    // timeclock lookups
+    q($dst, "INSERT IGNORE INTO time_actions (action_code, action_name, sort_order) VALUES
+        ('CLOCK_IN', 'Clock In', 10),
+        ('CLOCK_OUT', 'Clock Out', 20),
+        ('BREAK_START', 'Break Start', 30),
+        ('BREAK_END', 'Break End', 40),
+        ('MEAL_START', 'Meal Start', 50),
+        ('MEAL_END', 'Meal End', 60),
+        ('ADJUSTMENT', 'Adjustment', 70),
+        ('PTO', 'PTO', 80)");
+
+    q($dst, "INSERT IGNORE INTO time_entry_types (type_code, type_name, sort_order) VALUES
+        ('TERMINAL',  'Terminal/Timeclock', 10),
+        ('MOBILE',    'Mobile',             20),
+        ('ADMIN',     'Admin Entry',        30),
+        ('IMPORT',    'Imported',           40),
+        ('SYSTEM',    'System Generated',   50),
+        ('PTO',       'PTO Entry',          60)");
+}
+
+function ensure_timeclock_schema(mysqli $dst, bool $dryRun, string $schema): void {
+    $ddl = [
+        "CREATE TABLE IF NOT EXISTS time_actions (
+            action_id      SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            action_code    VARCHAR(32)        NOT NULL,
+            action_name    VARCHAR(64)        NOT NULL,
+            is_active      TINYINT(1)         NOT NULL DEFAULT 1,
+            sort_order     SMALLINT UNSIGNED  NOT NULL DEFAULT 0,
+            PRIMARY KEY (action_id),
+            UNIQUE KEY uq_time_actions_code (action_code)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+        "CREATE TABLE IF NOT EXISTS time_entry_types (
+            entry_type_id  SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            type_code      VARCHAR(32)        NOT NULL,
+            type_name      VARCHAR(64)        NOT NULL,
+            is_active      TINYINT(1)         NOT NULL DEFAULT 1,
+            sort_order     SMALLINT UNSIGNED  NOT NULL DEFAULT 0,
+            PRIMARY KEY (entry_type_id),
+            UNIQUE KEY uq_time_entry_types_code (type_code)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+        "CREATE TABLE IF NOT EXISTS employee_work_sessions (
+            work_session_id        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            entity_id              INT             NOT NULL,
+            opened_at              DATETIME        NOT NULL,
+            closed_at              DATETIME        NULL,
+            created_at             DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            created_by_entity_id   INT             NULL,
+            voided_at              DATETIME        NULL,
+            voided_by_entity_id    INT             NULL,
+            void_reason            VARCHAR(255)    NULL,
+            PRIMARY KEY (work_session_id),
+            KEY idx_sessions_entity_opened (entity_id, opened_at),
+            KEY idx_sessions_opened (opened_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+        "CREATE TABLE IF NOT EXISTS employee_time_events (
+            time_event_id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            entity_id             INT             NOT NULL,
+            action_id             SMALLINT UNSIGNED NOT NULL,
+            event_at              DATETIME        NOT NULL,
+            entry_type_id         SMALLINT UNSIGNED NOT NULL,
+            work_session_id       BIGINT UNSIGNED NULL,
+            minutes               INT NULL,
+            note                  VARCHAR(255) NULL,
+            created_at            DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            created_by_entity_id  INT             NULL,
+            voided_at             DATETIME        NULL,
+            voided_by_entity_id   INT             NULL,
+            void_reason           VARCHAR(255)    NULL,
+            PRIMARY KEY (time_event_id),
+            KEY idx_time_events_entity_at (entity_id, event_at),
+            KEY idx_time_events_at (event_at),
+            KEY idx_time_events_action_at (action_id, event_at),
+            KEY idx_time_events_session (work_session_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+    ];
+
+    foreach ($ddl as $sql) {
+        if ($dryRun) continue;
+        q($dst, $sql);
+    }
+
+    $hasSessions = table_exists($dst, $schema, 'employee_work_sessions');
+    $hasEvents = table_exists($dst, $schema, 'employee_time_events');
+
+    if ($hasSessions) {
+        ensure_index($dst, $dryRun, $schema, 'employee_work_sessions', 'idx_sessions_entity_opened', "INDEX idx_sessions_entity_opened (entity_id, opened_at)");
+        ensure_index($dst, $dryRun, $schema, 'employee_work_sessions', 'idx_sessions_opened', "INDEX idx_sessions_opened (opened_at)");
+
+        ensure_fk($dst, $dryRun, $schema, 'employee_work_sessions', 'fk_sessions_entity', "FOREIGN KEY (entity_id) REFERENCES entities(EntityID)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_work_sessions', 'fk_sessions_created_by', "FOREIGN KEY (created_by_entity_id) REFERENCES entities(EntityID)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_work_sessions', 'fk_sessions_voided_by', "FOREIGN KEY (voided_by_entity_id) REFERENCES entities(EntityID)");
+    }
+
+    if ($hasEvents) {
+        ensure_index($dst, $dryRun, $schema, 'employee_time_events', 'idx_time_events_entity_at', "INDEX idx_time_events_entity_at (entity_id, event_at)");
+        ensure_index($dst, $dryRun, $schema, 'employee_time_events', 'idx_time_events_at', "INDEX idx_time_events_at (event_at)");
+        ensure_index($dst, $dryRun, $schema, 'employee_time_events', 'idx_time_events_action_at', "INDEX idx_time_events_action_at (action_id, event_at)");
+        ensure_index($dst, $dryRun, $schema, 'employee_time_events', 'idx_time_events_session', "INDEX idx_time_events_session (work_session_id)");
+
+        ensure_fk($dst, $dryRun, $schema, 'employee_time_events', 'fk_time_events_action', "FOREIGN KEY (action_id) REFERENCES time_actions(action_id)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_time_events', 'fk_time_events_entry_type', "FOREIGN KEY (entry_type_id) REFERENCES time_entry_types(entry_type_id)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_time_events', 'fk_time_events_session', "FOREIGN KEY (work_session_id) REFERENCES employee_work_sessions(work_session_id)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_time_events', 'fk_time_events_entity', "FOREIGN KEY (entity_id) REFERENCES entities(EntityID)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_time_events', 'fk_time_events_created_by', "FOREIGN KEY (created_by_entity_id) REFERENCES entities(EntityID)");
+        ensure_fk($dst, $dryRun, $schema, 'employee_time_events', 'fk_time_events_voided_by', "FOREIGN KEY (voided_by_entity_id) REFERENCES entities(EntityID)");
+    }
 }
 
 function role_id(mysqli $dst, string $code): int {
@@ -438,7 +657,7 @@ function norm_vendor_lookup(string $s): string {
  * Map legacy tblVendors.LookupCode to a canonical vendor_lookup_codes.Code.
  * Based on your conversion table (shop_db_1.tblVendors.LookupCode -> vendor_lookup_codes.Code).
  */
-function load_vendor_lookup_descriptions(string $schemaPath = '/data-source/shema_sumamry.json'): array {
+function load_vendor_lookup_descriptions(string $schemaPath = '/data-source/schema_summary.json'): array {
     static $cache = null;
     if ($cache !== null) return $cache;
 
@@ -481,7 +700,7 @@ function load_vendor_lookup_descriptions(string $schemaPath = '/data-source/shem
 /**
  * Map legacy tblVendors.LookupCode to a canonical vendor_lookup_codes.Code.
  * Synonyms originate from the provided conversion map (old values -> new code key).
- * Descriptions are loaded from /data-source/shema_sumamry.json when available.
+ * Descriptions are loaded from /data-source/schema_summary.json when available.
  */
 function map_vendor_lookup(?string $legacy): array {
     $legacy = $legacy ?? '';
@@ -570,6 +789,28 @@ function getPricingPlanId(mysqli $dst, string $code): int {
     return $newId;
 }
 
+function time_action_id(mysqli $dst, string $code): int {
+    $code = strtoupper(trim($code));
+    $stmt = $dst->prepare("SELECT action_id FROM time_actions WHERE action_code = ? LIMIT 1");
+    $stmt->bind_param("s", $code);
+    $stmt->execute();
+    $stmt->bind_result($id);
+    if ($stmt->fetch()) { $stmt->close(); return intval($id); }
+    $stmt->close();
+    throw new RuntimeException("Time action not seeded: $code");
+}
+
+function entry_type_id(mysqli $dst, string $code): int {
+    $code = strtoupper(trim($code));
+    $stmt = $dst->prepare("SELECT entry_type_id FROM time_entry_types WHERE type_code = ? LIMIT 1");
+    $stmt->bind_param("s", $code);
+    $stmt->execute();
+    $stmt->bind_result($id);
+    if ($stmt->fetch()) { $stmt->close(); return intval($id); }
+    $stmt->close();
+    throw new RuntimeException("Time entry type not seeded: $code");
+}
+
 function add_phone(mysqli $dst, bool $dryRun, int $entityID, string $type, ?string $num, bool $primary=false): void {
     $num = trim((string)$num);
     if ($num === '') return;
@@ -609,6 +850,53 @@ function add_address(mysqli $dst, bool $dryRun, int $entityID, string $type, ?st
     $stmt->bind_param("iissssssi", $entityID, $typeId, $a1, $a2, $city, $state, $postal, $country, $prim);
     $stmt->execute();
     $stmt->close();
+}
+
+function normalize_datetime(?string $dt): ?string {
+    $dt = trim((string)$dt);
+    if ($dt === '' || $dt === '0000-00-00' || $dt === '0000-00-00 00:00:00') return null;
+    try {
+        $d = new DateTime($dt);
+        return $d->format('Y-m-d H:i:s');
+    } catch (Throwable $e) {
+        return null;
+    }
+}
+
+function map_trans_type_to_action(string $legacyType, bool $isOutContext = false): string {
+    $t = strtoupper(trim($legacyType));
+    $patterns = [
+        'CLOCK IN'   => 'CLOCK_IN',
+        'CLOCKIN'    => 'CLOCK_IN',
+        'CLOCK OUT'  => 'CLOCK_OUT',
+        'CLOCKOUT'   => 'CLOCK_OUT',
+        'BREAK START'=> 'BREAK_START',
+        'BREAK END'  => 'BREAK_END',
+        'LUNCH OUT'  => 'MEAL_START',
+        'LUNCH IN'   => 'MEAL_END',
+        'MEAL OUT'   => 'MEAL_START',
+        'MEAL IN'    => 'MEAL_END',
+        'PTO'        => 'PTO',
+    ];
+    foreach ($patterns as $needle => $action) {
+        if (str_contains($t, $needle)) return $action;
+    }
+
+    if (str_contains($t, 'BREAK')) return $isOutContext ? 'BREAK_END' : 'BREAK_START';
+    if (str_contains($t, 'MEAL') || str_contains($t, 'LUNCH')) return $isOutContext ? 'MEAL_END' : 'MEAL_START';
+    if (str_contains($t, 'OUT')) return 'CLOCK_OUT';
+    if (str_contains($t, 'IN')) return 'CLOCK_IN';
+
+    return $isOutContext ? 'CLOCK_OUT' : 'CLOCK_IN';
+}
+
+function end_action_for_start(string $startAction): string {
+    return match ($startAction) {
+        'BREAK_START' => 'BREAK_END',
+        'MEAL_START'  => 'MEAL_END',
+        'PTO'         => 'PTO',
+        default       => 'CLOCK_OUT',
+    };
 }
 
 function get_or_create_entity_person(mysqli $dst, bool $dryRun, array &$personMap, string $first, ?string $middle, string $last, string $displayName, ?string $addrKey): int {
@@ -729,16 +1017,154 @@ function upsert_sublet_provider(mysqli $dst, bool $dryRun, int $entityID): void 
     $stmt->close();
 }
 
+function employee_entity_id(mysqli $dst, ?string $legacyEmployeeId): ?int {
+    $legacyEmployeeId = trim((string)$legacyEmployeeId);
+    if ($legacyEmployeeId === '' || !is_numeric($legacyEmployeeId)) return null;
+
+    $legacyInt = intval($legacyEmployeeId);
+    $stmt = $dst->prepare("SELECT EntityID FROM employee_accounts WHERE LegacyEmployeeID = ? LIMIT 1");
+    $stmt->bind_param("i", $legacyInt);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res ? $res->fetch_assoc() : null;
+    $stmt->close();
+    if ($row && isset($row['EntityID'])) return intval($row['EntityID']);
+    return null;
+}
+
+function migrate_timeclock(mysqli $src, mysqli $dst, bool $dryRun): array {
+    $stats = [
+        'rows' => 0,
+        'events' => 0,
+        'skipped_missing_employee' => 0,
+        'skipped_no_timestamp' => 0,
+    ];
+
+    $transTypes = [];
+    $typesRes = q($src, "SELECT TransTypeID, TransType FROM tblEmpTransType");
+    while ($row = $typesRes->fetch_assoc()) {
+        $id = isset($row['TransTypeID']) ? intval($row['TransTypeID']) : null;
+        if ($id !== null) $transTypes[$id] = trim((string)$row['TransType']);
+    }
+    $typesRes->free();
+
+    $entryTypeImportId = $dryRun ? null : entry_type_id($dst, 'IMPORT');
+    $insert = null;
+    $evEntityId = 0;
+    $evActionId = 0;
+    $evAt = '';
+    $evEntryTypeId = $entryTypeImportId ?? 0;
+    $evSessionId = null;
+    $evMinutes = null;
+    $evNote = null;
+
+    if (!$dryRun) {
+        $insert = $dst->prepare("INSERT INTO employee_time_events (entity_id, action_id, event_at, entry_type_id, work_session_id, minutes, note) VALUES (?,?,?,?,?,?,?)");
+        $insert->bind_param("iisiiis", $evEntityId, $evActionId, $evAt, $evEntryTypeId, $evSessionId, $evMinutes, $evNote);
+    }
+
+    $res = q($src, "SELECT * FROM tblEmpTimeClock ORDER BY Clockin, ClockOut, TransDate, LineNo");
+    while ($row = $res->fetch_assoc()) {
+        $stats['rows']++;
+
+        $entityId = employee_entity_id($dst, $row['EmployeeID'] ?? null);
+        if ($entityId === null) { $stats['skipped_missing_employee']++; continue; }
+
+        $transType = '';
+        if (isset($row['TransTypeID'])) {
+            $tid = intval($row['TransTypeID']);
+            $transType = $transTypes[$tid] ?? '';
+        }
+
+        $clockIn = normalize_datetime($row['Clockin'] ?? null);
+        $clockOut = normalize_datetime($row['ClockOut'] ?? null);
+        $transDate = normalize_datetime($row['TransDate'] ?? null);
+        $note = $transType !== '' ? $transType : null;
+
+        if ($clockIn !== null && $clockOut !== null) {
+            $startAction = map_trans_type_to_action($transType, false);
+            if ($startAction === 'CLOCK_OUT') $startAction = 'CLOCK_IN';
+            if ($startAction === 'BREAK_END') $startAction = 'BREAK_START';
+            if ($startAction === 'MEAL_END') $startAction = 'MEAL_START';
+            $endAction = end_action_for_start($startAction);
+
+            $minutes = null;
+            $inTs = strtotime($clockIn);
+            $outTs = strtotime($clockOut);
+            if ($inTs !== false && $outTs !== false && $outTs > $inTs) {
+                $minutes = intval(floor(($outTs - $inTs) / 60));
+            }
+
+            if ($startAction === 'PTO') {
+                // Duration-style PTO entry: single row with computed minutes.
+                if (!$dryRun) {
+                    $evEntityId = $entityId;
+                    $evActionId = time_action_id($dst, $startAction);
+                    $evAt = $clockIn;
+                    $evSessionId = null;
+                    $evMinutes = $minutes;
+                    $evNote = $note;
+                    $insert->execute();
+                }
+                $stats['events']++;
+                continue;
+            }
+
+            if (!$dryRun) {
+                $evEntityId = $entityId;
+                $evActionId = time_action_id($dst, $startAction);
+                $evAt = $clockIn;
+                $evSessionId = null;
+                $evMinutes = null;
+                $evNote = $note;
+                $insert->execute();
+
+                $evEntityId = $entityId;
+                $evActionId = time_action_id($dst, $endAction);
+                $evAt = $clockOut;
+                $evSessionId = null;
+                $evMinutes = $minutes;
+                $evNote = $note;
+                $insert->execute();
+            }
+            $stats['events'] += 2;
+            continue;
+        }
+
+        $eventAt = $clockIn ?? $clockOut ?? $transDate;
+        if ($eventAt === null) { $stats['skipped_no_timestamp']++; continue; }
+
+        $actionCode = map_trans_type_to_action($transType, $clockOut !== null);
+        if (!$dryRun) {
+            $evEntityId = $entityId;
+            $evActionId = time_action_id($dst, $actionCode);
+            $evAt = $eventAt;
+            $evSessionId = null;
+            $evMinutes = null;
+            $evNote = $note;
+            $insert->execute();
+        }
+        $stats['events']++;
+    }
+    $res->free();
+
+    if ($insert instanceof mysqli_stmt) $insert->close();
+    return $stats;
+}
+
 // -------------------------
 // Main
 // -------------------------
 $cmd = $argv[1] ?? '';
 $dryRun = in_array('--dry-run', $argv, true);
 
-if (!in_array($cmd, ['create','drop','migrate'], true)) usage();
+if (!in_array($cmd, ['create','drop','migrate','update'], true)) usage();
 
-$src = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT, $SRC_DB);
 $dst = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT, $DST_DB);
+$src = null;
+if ($cmd === 'migrate') {
+    $src = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT, $SRC_DB);
+}
 
 if ($cmd === 'create') {
     logmsg("Creating schema in $DST_DB ...");
@@ -763,8 +1189,17 @@ if ($cmd === 'drop') {
     exit(0);
 }
 
+if ($cmd === 'update') {
+    logmsg("Updating schema in $DST_DB (dryRun=" . ($dryRun ? 'true' : 'false') . ") ...");
+    ensure_timeclock_schema($dst, $dryRun, $DST_DB);
+    ensure_seed_data($dst, $dryRun);
+    logmsg("Update complete.");
+    exit(0);
+}
+
 // migrate
 logmsg("Migrating $SRC_DB -> $DST_DB (dryRun=" . ($dryRun ? 'true' : 'false') . ") ...");
+ensure_timeclock_schema($dst, $dryRun, $DST_DB);
 ensure_seed_data($dst, $dryRun);
 
 $ORG_BUSINESS = org_type_id($dst, 'BUSINESS');
@@ -779,6 +1214,10 @@ $stats = [
     'vendors' => 0,
     'employees' => 0,
     'sublet_companies' => 0,
+    'time_events' => 0,
+    'time_rows' => 0,
+    'time_skipped_missing_employee' => 0,
+    'time_skipped_no_timestamp' => 0,
 ];
 
 // -------------------------
@@ -932,6 +1371,17 @@ while ($row = $r->fetch_assoc()) {
 }
 $r->free();
 logmsg("Employees migrated: {$stats['employees']}");
+
+// -------------------------
+// Timeclock events
+// -------------------------
+logmsg("tblEmpTimeClock -> employee_time_events ...");
+$timeStats = migrate_timeclock($src, $dst, $dryRun);
+$stats['time_events'] = $timeStats['events'];
+$stats['time_rows'] = $timeStats['rows'];
+$stats['time_skipped_missing_employee'] = $timeStats['skipped_missing_employee'];
+$stats['time_skipped_no_timestamp'] = $timeStats['skipped_no_timestamp'];
+logmsg("Timeclock rows processed: {$timeStats['rows']} | events inserted: {$timeStats['events']} | missing employees: {$timeStats['skipped_missing_employee']} | missing timestamps: {$timeStats['skipped_no_timestamp']}");
 
 // -------------------------
 // Sublet providers (distinct names)
