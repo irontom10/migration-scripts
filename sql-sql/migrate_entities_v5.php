@@ -381,13 +381,13 @@ CREATE TABLE IF NOT EXISTS time_entry_types (
 
 CREATE TABLE IF NOT EXISTS employee_work_sessions (
   work_session_id        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  entity_id              INT UNSIGNED    NOT NULL,
+  entity_id              INT             NOT NULL,
   opened_at              DATETIME        NOT NULL,
   closed_at              DATETIME        NULL,
   created_at             DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  created_by_entity_id   INT UNSIGNED    NULL,
+  created_by_entity_id   INT             NULL,
   voided_at              DATETIME        NULL,
-  voided_by_entity_id    INT UNSIGNED    NULL,
+  voided_by_entity_id    INT             NULL,
   void_reason            VARCHAR(255)    NULL,
   PRIMARY KEY (work_session_id),
   KEY idx_sessions_entity_opened (entity_id, opened_at),
