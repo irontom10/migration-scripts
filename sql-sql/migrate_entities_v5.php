@@ -265,6 +265,118 @@ CREATE TABLE IF NOT EXISTS entity_addresses (
   CONSTRAINT fk_addr_type FOREIGN KEY (AddressTypeID) REFERENCES address_types(AddressTypeID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Addresses attached to an entity. Supports billing/shipping/service/etc via AddressTypeID.';
 
+-- Generic asset system (vehicles, tools, etc.)
+CREATE TABLE IF NOT EXISTS asset_identifier_types (
+  identifier_type_id INT NOT NULL AUTO_INCREMENT,
+  code VARCHAR(40) NOT NULL,
+  name VARCHAR(80) NOT NULL,
+  PRIMARY KEY (identifier_type_id),
+  UNIQUE KEY uq_asset_identifier_types_code (code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Lookup for identifier types: VIN, LICENSE_PLATE, SERIAL_NO, UNIT_NO, QR_TAG, etc.';
+
+CREATE TABLE IF NOT EXISTS asset_types (
+  asset_type_id INT NOT NULL AUTO_INCREMENT,
+  code VARCHAR(40) NOT NULL,
+  name VARCHAR(80) NOT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (asset_type_id),
+  UNIQUE KEY uq_asset_types_code (code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Lookup for asset classes: VEHICLE, TRAILER, MACHINE, TOOL, PROPERTY, OTHER.';
+
+CREATE TABLE IF NOT EXISTS assets (
+  asset_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  asset_type_id INT NOT NULL,
+  display_name VARCHAR(150) NOT NULL,
+  description TEXT DEFAULT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+  PRIMARY KEY (asset_id),
+  KEY idx_assets_type (asset_type_id),
+  CONSTRAINT fk_assets_type FOREIGN KEY (asset_type_id) REFERENCES asset_types(asset_type_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Trade-agnostic “thing” table. Vehicles, tools, machines, etc.';
+
+CREATE TABLE IF NOT EXISTS asset_owners (
+  asset_id BIGINT UNSIGNED NOT NULL,
+  entity_id INT NOT NULL,
+  is_primary TINYINT(1) NOT NULL DEFAULT 1,
+  owned_from DATE DEFAULT NULL,
+  owned_to DATE DEFAULT NULL,
+  PRIMARY KEY (asset_id, entity_id),
+  KEY idx_asset_owners_entity (entity_id),
+  CONSTRAINT fk_asset_owners_asset FOREIGN KEY (asset_id) REFERENCES assets(asset_id) ON DELETE CASCADE,
+  CONSTRAINT fk_asset_owners_entity FOREIGN KEY (entity_id) REFERENCES entities(EntityID) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Who owns/controls an asset. Links assets to entities.';
+
+CREATE TABLE IF NOT EXISTS asset_identifiers (
+  asset_identifier_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  asset_id BIGINT UNSIGNED NOT NULL,
+  identifier_type_id INT NOT NULL,
+  value VARCHAR(80) NOT NULL,
+  issuer_region VARCHAR(30) DEFAULT NULL,
+  is_primary TINYINT(1) NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (asset_identifier_id),
+  UNIQUE KEY uq_asset_identifiers_unique (identifier_type_id, value),
+  KEY idx_asset_identifiers_asset (asset_id),
+  CONSTRAINT fk_asset_identifiers_asset FOREIGN KEY (asset_id) REFERENCES assets(asset_id) ON DELETE CASCADE,
+  CONSTRAINT fk_asset_identifiers_type FOREIGN KEY (identifier_type_id) REFERENCES asset_identifier_types(identifier_type_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci COMMENT='Identifiers for assets (VIN, serial number, plate, unit number). Multiple per asset.';
+
+CREATE TABLE IF NOT EXISTS manufacturers (
+  manufacturer_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(120) NOT NULL,
+  normalized_name VARCHAR(120) NOT NULL,
+  website VARCHAR(255) DEFAULT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (manufacturer_id),
+  UNIQUE KEY uq_manufacturers_normalized (normalized_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS manufacturer_models (
+  model_id INT NOT NULL AUTO_INCREMENT,
+  manufacturer_id INT NOT NULL,
+  asset_type_id INT NOT NULL,
+  name VARCHAR(120) NOT NULL,
+  normalized_name VARCHAR(120) NOT NULL,
+  model_code VARCHAR(80) DEFAULT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (model_id),
+  KEY idx_models_mfr (manufacturer_id),
+  KEY idx_models_type (asset_type_id),
+  UNIQUE KEY uq_models (manufacturer_id, asset_type_id, normalized_name),
+  CONSTRAINT fk_models_mfr  FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id),
+  CONSTRAINT fk_models_type FOREIGN KEY (asset_type_id) REFERENCES asset_types(asset_type_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS model_variants (
+  variant_id INT NOT NULL AUTO_INCREMENT,
+  model_id INT DEFAULT NULL,
+  variant_name VARCHAR(120) NOT NULL,
+  normalized_name VARCHAR(120) NOT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (variant_id),
+  UNIQUE KEY uq_model_variants_normalized (normalized_name),
+  KEY idx_model_variants_model (model_id),
+  CONSTRAINT fk_variants_model FOREIGN KEY (model_id) REFERENCES manufacturer_models(model_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS asset_make_model (
+  asset_id BIGINT UNSIGNED NOT NULL,
+  manufacturer_id INT DEFAULT NULL,
+  model_id INT DEFAULT NULL,
+  variant_id INT DEFAULT NULL,
+  model_year SMALLINT DEFAULT NULL,
+  PRIMARY KEY (asset_id),
+  KEY idx_amm_mfr (manufacturer_id),
+  KEY idx_amm_model (model_id),
+  KEY idx_amm_variant (variant_id),
+  CONSTRAINT fk_amm_asset   FOREIGN KEY (asset_id) REFERENCES assets(asset_id) ON DELETE CASCADE,
+  CONSTRAINT fk_amm_mfr     FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id),
+  CONSTRAINT fk_amm_model   FOREIGN KEY (model_id) REFERENCES manufacturer_models(model_id),
+  CONSTRAINT fk_amm_variant FOREIGN KEY (variant_id) REFERENCES model_variants(variant_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Role profiles
 -- Customer role anchor (1:1 with entities when the entity is a customer). Stores legacy IDs and joins customer-specific tables.
 CREATE TABLE IF NOT EXISTS customer_accounts (
@@ -448,6 +560,15 @@ DROP TABLE IF EXISTS employee_accounts;
 DROP TABLE IF EXISTS employee_statuses;
 DROP TABLE IF EXISTS vendor_accounts;
 DROP TABLE IF EXISTS vendor_lookup_codes;
+DROP TABLE IF EXISTS asset_make_model;
+DROP TABLE IF EXISTS model_variants;
+DROP TABLE IF EXISTS manufacturer_models;
+DROP TABLE IF EXISTS manufacturers;
+DROP TABLE IF EXISTS asset_identifiers;
+DROP TABLE IF EXISTS asset_owners;
+DROP TABLE IF EXISTS assets;
+DROP TABLE IF EXISTS asset_types;
+DROP TABLE IF EXISTS asset_identifier_types;
 DROP TABLE IF EXISTS customer_tax_info;
 DROP TABLE IF EXISTS customer_billing;
 DROP TABLE IF EXISTS pricing_plans;
@@ -497,6 +618,21 @@ function ensure_seed_data(mysqli $dst, bool $dryRun): void
   q($dst, "INSERT IGNORE INTO phone_types (PhoneTypeName) VALUES ('main'),('mobile'),('work'),('home'),('fax')");
   q($dst, "INSERT IGNORE INTO email_types (EmailTypeName) VALUES ('main'),('work'),('billing'),('personal')");
   q($dst, "INSERT IGNORE INTO address_types (AddressTypeName) VALUES ('billing'),('shipping'),('service'),('mailing'),('main'),('home'),('work')");
+
+  // asset lookups
+  q($dst, "INSERT IGNORE INTO asset_types (code, name) VALUES
+        ('VEHICLE','Vehicle'),
+        ('TRAILER','Trailer'),
+        ('MACHINE','Machine'),
+        ('TOOL','Tool'),
+        ('PROPERTY','Property'),
+        ('OTHER','Other')");
+
+  q($dst, "INSERT IGNORE INTO asset_identifier_types (code, name) VALUES
+        ('VIN','Vehicle Identification Number'),
+        ('LICENSE_PLATE','License Plate'),
+        ('UNIT_NO','Internal Unit Number'),
+        ('SERIAL_NO','Serial Number')");
 
   // customer type enum replacement
   q($dst, "INSERT IGNORE INTO customer_types (CustomerTypeName) VALUES ('Charge Account'),('Retail'),('Commercial'),('Wholesale')");
@@ -1171,6 +1307,162 @@ function upsert_sublet_provider(mysqli $dst, bool $dryRun, int $entityID): void
   $stmt->close();
 }
 
+function get_asset_type_id(mysqli $dst, string $code): int
+{
+  $stmt = $dst->prepare("SELECT asset_type_id FROM asset_types WHERE code=? LIMIT 1");
+  $stmt->bind_param("s", $code);
+  $stmt->execute();
+  $stmt->bind_result($id);
+  if ($stmt->fetch()) {
+    $stmt->close();
+    return intval($id);
+  }
+  $stmt->close();
+  throw new RuntimeException("Asset type not seeded: $code");
+}
+
+function ensure_manufacturer(mysqli $dst, bool $dryRun, string $name): ?int
+{
+  $norm = normalize_key($name);
+  if ($norm === '') return null;
+  if ($dryRun) return -1;
+
+  $stmt = $dst->prepare("SELECT manufacturer_id FROM manufacturers WHERE normalized_name = ? LIMIT 1");
+  $stmt->bind_param("s", $norm);
+  $stmt->execute();
+  $stmt->bind_result($id);
+  if ($stmt->fetch()) {
+    $stmt->close();
+    return intval($id);
+  }
+  $stmt->close();
+
+  $stmt = $dst->prepare("INSERT INTO manufacturers (name, normalized_name) VALUES (?,?)");
+  $stmt->bind_param("ss", $name, $norm);
+  $stmt->execute();
+  $newId = intval($stmt->insert_id);
+  $stmt->close();
+  return $newId;
+}
+
+function ensure_model(mysqli $dst, bool $dryRun, int $assetTypeId, ?int $manufacturerId, string $name): ?int
+{
+  $norm = normalize_key($name);
+  if ($norm === '') return null;
+  if ($manufacturerId === null) return null;
+  if ($dryRun) return -1;
+
+  $stmt = $dst->prepare("SELECT model_id FROM manufacturer_models WHERE manufacturer_id=? AND asset_type_id=? AND normalized_name=? LIMIT 1");
+  $stmt->bind_param("iis", $manufacturerId, $assetTypeId, $norm);
+  $stmt->execute();
+  $stmt->bind_result($id);
+  if ($stmt->fetch()) {
+    $stmt->close();
+    return intval($id);
+  }
+  $stmt->close();
+
+  $stmt = $dst->prepare("INSERT INTO manufacturer_models (manufacturer_id, asset_type_id, name, normalized_name) VALUES (?,?,?,?)");
+  $stmt->bind_param("iiss", $manufacturerId, $assetTypeId, $name, $norm);
+  $stmt->execute();
+  $newId = intval($stmt->insert_id);
+  $stmt->close();
+  return $newId;
+}
+
+function ensure_variant(mysqli $dst, bool $dryRun, ?int $modelId, ?string $variant): ?int
+{
+  if ($variant === null) return null;
+  $norm = normalize_key($variant);
+  if ($norm === '') return null;
+  if ($dryRun) return -1;
+
+  $stmt = $dst->prepare("SELECT variant_id FROM model_variants WHERE normalized_name=? LIMIT 1");
+  $stmt->bind_param("s", $norm);
+  $stmt->execute();
+  $stmt->bind_result($id);
+  if ($stmt->fetch()) {
+    $stmt->close();
+    return intval($id);
+  }
+  $stmt->close();
+
+  $stmt = $dst->prepare("INSERT INTO model_variants (model_id, variant_name, normalized_name) VALUES (?,?,?)");
+  $stmt->bind_param("iss", $modelId, $variant, $norm);
+  $stmt->execute();
+  $newId = intval($stmt->insert_id);
+  $stmt->close();
+  return $newId;
+}
+
+function add_asset(mysqli $dst, bool $dryRun, int $assetTypeId, string $displayName, ?string $description): ?int
+{
+  if ($dryRun) return -1;
+  $stmt = $dst->prepare("INSERT INTO assets (asset_type_id, display_name, description) VALUES (?,?,?)");
+  $stmt->bind_param("iss", $assetTypeId, $displayName, $description);
+  $stmt->execute();
+  $id = intval($stmt->insert_id);
+  $stmt->close();
+  return $id;
+}
+
+function add_asset_owner(mysqli $dst, bool $dryRun, int $assetId, int $entityId, bool $isPrimary): void
+{
+  if ($dryRun) return;
+  $isPrim = $isPrimary ? 1 : 0;
+  $stmt = $dst->prepare("INSERT IGNORE INTO asset_owners (asset_id, entity_id, is_primary, owned_from, owned_to) VALUES (?,?,?,NULL,NULL)");
+  $stmt->bind_param("iii", $assetId, $entityId, $isPrim);
+  $stmt->execute();
+  $stmt->close();
+}
+
+function add_asset_identifier(mysqli $dst, bool $dryRun, int $assetId, string $typeCode, ?string $value, ?string $region, bool $isPrimary): void
+{
+  $value = trim((string)$value);
+  if ($value === '') return;
+  if ($dryRun) return;
+
+  $stmt = $dst->prepare("SELECT identifier_type_id FROM asset_identifier_types WHERE code=? LIMIT 1");
+  $stmt->bind_param("s", $typeCode);
+  $stmt->execute();
+  $stmt->bind_result($typeId);
+  if (!$stmt->fetch()) {
+    $stmt->close();
+    return;
+  }
+  $stmt->close();
+
+  $isPrim = $isPrimary ? 1 : 0;
+  $stmt = $dst->prepare("INSERT IGNORE INTO asset_identifiers (asset_id, identifier_type_id, value, issuer_region, is_primary) VALUES (?,?,?,?,?)");
+  $stmt->bind_param("iissi", $assetId, $typeId, $value, $region, $isPrim);
+  $stmt->execute();
+  $stmt->close();
+}
+
+function add_asset_make_model(mysqli $dst, bool $dryRun, int $assetId, ?int $manufacturerId, ?int $modelId, ?int $variantId, ?int $modelYear): void
+{
+  if ($dryRun) return;
+  $stmt = $dst->prepare("INSERT INTO asset_make_model (asset_id, manufacturer_id, model_id, variant_id, model_year) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE manufacturer_id=VALUES(manufacturer_id), model_id=VALUES(model_id), variant_id=VALUES(variant_id), model_year=VALUES(model_year)");
+  $stmt->bind_param("iiiii", $assetId, $manufacturerId, $modelId, $variantId, $modelYear);
+  $stmt->execute();
+  $stmt->close();
+}
+
+function customer_entity_id(mysqli $dst, ?int $legacyCustomerId): ?int
+{
+  if ($legacyCustomerId === null) return null;
+  $stmt = $dst->prepare("SELECT EntityID FROM customer_accounts WHERE LegacyCustomerID = ? LIMIT 1");
+  $stmt->bind_param("i", $legacyCustomerId);
+  $stmt->execute();
+  $stmt->bind_result($id);
+  if ($stmt->fetch()) {
+    $stmt->close();
+    return intval($id);
+  }
+  $stmt->close();
+  return null;
+}
+
 function employee_entity_id(mysqli $dst, ?string $legacyEmployeeId): ?int
 {
   $legacyEmployeeId = trim((string)$legacyEmployeeId);
@@ -1379,6 +1671,10 @@ $stats = [
   'vendors' => 0,
   'employees' => 0,
   'sublet_companies' => 0,
+  'manufacturers' => 0,
+  'models' => 0,
+  'variants' => 0,
+  'vehicles' => 0,
   'time_events' => 0,
   'time_rows' => 0,
   'time_skipped_missing_employee' => 0,
@@ -1574,6 +1870,123 @@ while ($row = $r->fetch_assoc()) {
 }
 $r->free();
 logmsg("Sublet providers migrated: {$stats['sublet_companies']}");
+
+// -------------------------
+// Vehicle lookups
+// -------------------------
+$vehicleAssetTypeId = get_asset_type_id($dst, 'VEHICLE');
+
+logmsg("tblMakes -> manufacturers ...");
+$makeNameById = [];
+$seenMakes = [];
+$resMakes = q($src, "SELECT * FROM tblMakes");
+while ($row = $resMakes->fetch_assoc()) {
+  $makeId = isset($row['MakeID']) ? intval($row['MakeID']) : null;
+  $makeName = trim((string)($row['Make'] ?? ''));
+  if ($makeId !== null) $makeNameById[$makeId] = $makeName;
+
+  $norm = normalize_key($makeName);
+  if ($norm === '' || isset($seenMakes[$norm])) continue;
+  $seenMakes[$norm] = true;
+
+  $mid = ensure_manufacturer($dst, $dryRun, $makeName);
+  if (!$dryRun && $mid !== null) $stats['manufacturers']++;
+}
+$resMakes->free();
+logmsg("Manufacturers inserted: {$stats['manufacturers']}");
+
+logmsg("tblModels -> manufacturer_models ...");
+$seenModels = [];
+$resModels = q($src, "SELECT * FROM tblModels");
+while ($row = $resModels->fetch_assoc()) {
+  $makeId = isset($row['MakeID']) ? intval($row['MakeID']) : null;
+  $modelName = trim((string)($row['Model'] ?? ''));
+  if ($modelName === '') continue;
+  $makeNameVal = $makeId !== null && isset($makeNameById[$makeId]) ? $makeNameById[$makeId] : '';
+
+  $modelKey = normalize_key(($makeNameVal ?: 'unknown') . '|' . $modelName);
+  if ($modelKey === '' || isset($seenModels[$modelKey])) continue;
+  $seenModels[$modelKey] = true;
+
+  $mfrId = ensure_manufacturer($dst, $dryRun, $makeNameVal);
+  $modelId = ensure_model($dst, $dryRun, $vehicleAssetTypeId, $mfrId, $modelName);
+  if (!$dryRun && $modelId !== null) $stats['models']++;
+}
+$resModels->free();
+logmsg("Models inserted: {$stats['models']}");
+
+logmsg("tblVehicleTrans -> model_variants ...");
+$seenVariants = [];
+$resTrans = q($src, "SELECT * FROM tblVehicleTrans");
+while ($row = $resTrans->fetch_assoc()) {
+  $desc = trim((string)($row['TransDesc'] ?? ''));
+  $norm = normalize_key($desc);
+  if ($norm === '' || isset($seenVariants[$norm])) continue;
+  $seenVariants[$norm] = true;
+
+  $variantId = ensure_variant($dst, $dryRun, null, $desc);
+  if (!$dryRun && $variantId !== null) $stats['variants']++;
+}
+$resTrans->free();
+logmsg("Transmission variants inserted: {$stats['variants']}");
+
+// -------------------------
+// Vehicles
+// -------------------------
+logmsg("tblVehicles -> assets/asset_* ...");
+$resVeh = q($src, "SELECT * FROM tblVehicles");
+while ($row = $resVeh->fetch_assoc()) {
+  $legacyVehicleId = isset($row['VehicleID']) ? intval($row['VehicleID']) : null;
+  $legacyCustomerId = isset($row['CustomerID']) ? intval($row['CustomerID']) : null;
+  $make = trim((string)($row['Make'] ?? ''));
+  $model = trim((string)($row['Model'] ?? ''));
+  $year = trim((string)($row['Year'] ?? ''));
+  $license = trim((string)($row['License'] ?? ''));
+  $plateState = trim((string)($row['LicState'] ?? ''));
+  $vin = trim((string)($row['Vin'] ?? ''));
+  $color = trim((string)($row['Color'] ?? ''));
+  $trans = trim((string)($row['Trans'] ?? ''));
+  $unitNo = trim((string)($row['VehicleTagID'] ?? ''));
+
+  $displayParts = array_filter([$year, $make, $model, $license], fn($x) => trim((string)$x) !== '');
+  $displayName = $displayParts ? implode(' ', $displayParts) : "Vehicle $legacyVehicleId";
+
+  $descParts = [];
+  if ($color !== '') $descParts[] = "Color: $color";
+  if (isset($row['Engine']) && trim((string)$row['Engine']) !== '') $descParts[] = "Engine: " . trim((string)$row['Engine']);
+  if ($trans !== '') $descParts[] = "Trans: $trans";
+  if (isset($row['DriveAxel']) && trim((string)$row['DriveAxel']) !== '') $descParts[] = "Drive: " . trim((string)$row['DriveAxel']);
+  if (array_key_exists('AirCond', $row)) {
+    $acVal = $row['AirCond'];
+    if ($acVal !== null && $acVal !== '') $descParts[] = "AC: " . (intval($acVal) ? 'Yes' : 'No');
+  }
+  if (isset($row['ManufactureDate']) && trim((string)$row['ManufactureDate']) !== '') $descParts[] = "Build: " . $row['ManufactureDate'];
+  if (isset($row['AveDMileage']) && trim((string)$row['AveDMileage']) !== '') $descParts[] = "Avg Mileage: " . $row['AveDMileage'];
+  if (isset($row['Comments']) && trim((string)$row['Comments']) !== '') $descParts[] = "Notes: " . trim((string)$row['Comments']);
+  $description = $descParts ? implode(' | ', $descParts) : null;
+
+  $mfrId = ensure_manufacturer($dst, $dryRun, $make);
+  $modelId = ensure_model($dst, $dryRun, $vehicleAssetTypeId, $mfrId, $model);
+  $modelYear = null;
+  if ($year !== '' && is_numeric($year)) $modelYear = intval($year);
+  $variantId = ensure_variant($dst, $dryRun, $modelId, $trans);
+
+  $assetId = add_asset($dst, $dryRun, $vehicleAssetTypeId, $displayName, $description);
+  if ($assetId !== null && $assetId > 0 && !$dryRun) {
+    add_asset_make_model($dst, $dryRun, $assetId, $mfrId, $modelId, $variantId, $modelYear);
+    if ($legacyCustomerId !== null) {
+      $ownerEntity = customer_entity_id($dst, $legacyCustomerId);
+      if ($ownerEntity !== null) add_asset_owner($dst, $dryRun, $assetId, $ownerEntity, true);
+    }
+    add_asset_identifier($dst, $dryRun, $assetId, 'VIN', $vin, null, true);
+    add_asset_identifier($dst, $dryRun, $assetId, 'LICENSE_PLATE', $license, $plateState !== '' ? $plateState : null, true);
+    add_asset_identifier($dst, $dryRun, $assetId, 'UNIT_NO', $unitNo, null, false);
+  }
+
+  $stats['vehicles']++;
+}
+$resVeh->free();
+logmsg("Vehicles migrated: {$stats['vehicles']}");
 
 logmsg("Migration complete.");
 exit(0);
