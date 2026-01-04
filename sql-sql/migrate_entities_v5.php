@@ -139,6 +139,19 @@ function concat_name(string $first, string $last): string
   return $name;
 }
 
+function normalize_model_year(string $year, int &$skippedOutOfRange): ?int
+{
+  $year = trim($year);
+  if ($year === '' || !is_numeric($year)) return null;
+
+  $val = intval($year);
+  if ($val < -32768 || $val > 32767) {
+    $skippedOutOfRange++;
+    return null;
+  }
+  return $val;
+}
+
 // -------------------------
 // SCHEMA (target)
 // -------------------------
@@ -1675,6 +1688,7 @@ $stats = [
   'models' => 0,
   'variants' => 0,
   'vehicles' => 0,
+  'vehicles_model_year_skipped' => 0,
   'time_events' => 0,
   'time_rows' => 0,
   'time_skipped_missing_employee' => 0,
@@ -1967,8 +1981,7 @@ while ($row = $resVeh->fetch_assoc()) {
 
   $mfrId = ensure_manufacturer($dst, $dryRun, $make);
   $modelId = ensure_model($dst, $dryRun, $vehicleAssetTypeId, $mfrId, $model);
-  $modelYear = null;
-  if ($year !== '' && is_numeric($year)) $modelYear = intval($year);
+  $modelYear = normalize_model_year($year, $stats['vehicles_model_year_skipped']);
   $variantId = ensure_variant($dst, $dryRun, $modelId, $trans);
 
   $assetId = add_asset($dst, $dryRun, $vehicleAssetTypeId, $displayName, $description);
@@ -1986,7 +1999,11 @@ while ($row = $resVeh->fetch_assoc()) {
   $stats['vehicles']++;
 }
 $resVeh->free();
-logmsg("Vehicles migrated: {$stats['vehicles']}");
+$vehicleMsg = "Vehicles migrated: {$stats['vehicles']}";
+if ($stats['vehicles_model_year_skipped'] > 0) {
+  $vehicleMsg .= " (model years skipped: {$stats['vehicles_model_year_skipped']})";
+}
+logmsg($vehicleMsg);
 
 logmsg("Migration complete.");
 exit(0);
